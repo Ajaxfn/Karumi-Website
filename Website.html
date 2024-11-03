@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Web Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Background Video */
+        body {
+            overflow-x: hidden; /* Prevent horizontal overflow */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.7; /* Adjust the opacity for better text visibility */
+        }
+
+        /* Black Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Black overlay with transparency */
+            z-index: 0; /* Behind the text */
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            display: flex;
+            align-items: center; /* Align items vertically centered */
+            padding: 1rem 2rem;
+            background-color: rgba(0, 0, 0, 0.5); /* Transparent black */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1; /* Above the overlay */
+            position: relative; /* Position for z-index stacking */
+        }
+
+        .navbar img {
+            height: 50px; /* Adjust the height as needed */
+            margin-right: 1rem; /* Space between logo and title */
+        }
+
+        .navbar h1 {
+            color: #d40000; /* Set the text color to red */
+            font-size: 2rem;
+            margin-right: auto; /* Push the rest of the menu to the right */
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .navbar ul li {
+            font-size: 1.2rem;
+        }
+
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid #d40000;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .navbar ul li a:hover {
+            color: #fff;
+            background-color: #d40000;
+            box-shadow: 0px 0px 12px #d40000, 0 0 30px rgba(212, 0, 0, 0.5);
+            transform: scale(1.1);
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 3rem 2rem;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            max-width: 900px;
+            margin: 2rem auto; /* Center the content and add margin for spacing */
+            z-index: 1; /* Above the overlay */
+        }
+
+        .section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Card with Transparent Dark Gray Background */
+        .card {
+            background-color: rgba(50, 50, 50, 0.5); /* Dark gray with transparency */
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h2 {
+            color: #d40000;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .card p {
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-size: 1.5rem; /* Increased font size for description */
+        }
+
+        /* Image Styling */
+        .section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            margin-top: 1rem;
+        }
+
+        /* Footer Styling */
+        .footer {
+            padding: 1.5rem;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Changed to transparent black */
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1; /* Above the overlay */
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth; /* Enable smooth scrolling */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar h1 {
+                font-size: 1.5rem;
+            }
+
+            .navbar ul li a {
+                padding: 0.5rem 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Video -->
+    <video autoplay muted loop class="video-background">
+        <source src="C:\Users\Riley\Downloads\Red Color Plexus Technology Lines Free Stock Video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Overlay for Dark Background -->
+    <div class="overlay"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <img src="C:\Users\Riley\Downloads\karumi image.png" alt="Logo"> <!-- Add your logo here -->
+        <h1>Karumi</h1>
+        <ul>
+            <li><a href="#home" onclick="showSection('home')">🏠 Home</a></li>
+            <li><a href="#about" onclick="showSection('about')">👤 About</a></li>
+            <li><a href="#services" onclick="showSection('services')">💼 Services</a></li>
+            <li><a href="#purchase" onclick="showSection('purchase')">⬇️ Purchase</a></li>
+            <li><a href="#contact" onclick="showSection('contact')">📞 Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Sections -->
+    <div id="home" class="section active">
+        <div class="card">
+            <h2>Welcome To Karumi</h2>
+            <p>At Karumi, we are dedicated to delivering high-quality web solutions tailored to meet your unique needs. Our expert team specializes in innovative design, cutting-edge technology, and exceptional customer service, ensuring that your project stands out in today’s competitive digital landscape.
+
+Why Choose Us?
+Expertise: With years of experience in web and app development, we have the skills necessary to bring your vision to life. Our developers are well-versed in the latest technologies and trends, ensuring your project is modern and effective.
+
+Tailored Solutions: We believe that every client is unique, which is why we offer customized solutions. Whether you need a simple website, a complex application, or digital marketing services, we work closely with you to understand your goals and deliver the best results.
+
+Transparent Pricing: Our services are competitively priced, and we are upfront about costs. We offer various payment options, ensuring that you receive the best value for your investment. We accept payments in Robux for our services, making it easy for our clients to transact with us securely and conveniently.
+
+Ongoing Support: Our commitment to your success doesn’t end at launch. We provide ongoing support and maintenance to ensure your website continues to perform at its best.
+
+Join us on this exciting journey, and let’s create something remarkable together!.</p>
+            <img src="C:\Users\Riley\Downloads\cropped.jpg" alt="Home Image">
+        </div>
+    </div>
+
+    <div id="about" class="section">
+        <div class="card">
+            <h2>About Us</h2>
+            <p>At Karumi, we are dedicated to providing advanced, reliable, and user-friendly tools for the gaming community. Our team of passionate developers understands the ever-evolving landscape of gaming, and we strive to stay ahead of the curve by delivering top-tier executors that enhance your gameplay experience.
+
+We prioritize safety and performance, ensuring that our executor is optimized for a seamless integration with your favorite games. Our mission is to empower players by providing them with the tools they need to explore new dimensions of gaming, while maintaining a strong commitment to user security and compliance.
+
+With an intuitive interface and robust features, Karumi is designed for both newcomers and seasoned veterans. Whether you’re looking to unlock exclusive content, customize your gameplay, or simply enhance your gaming experience, we are here to support you every step of the way.
+
+Join our community of gamers and take your experience to the next level with Karumi. Together, let’s redefine what’s possible in the gaming world!.</p>
+        </div>
+    </div>
+
+    <div id="services" class="section">
+        <div class="card">
+            <h2>Our Services</h2>
+            <p>At Karumi, we offer a comprehensive suite of services designed to enhance your gaming experience and provide you with the tools necessary to unlock your game’s full potential. Our core services include:
+
+Advanced Script Execution: Utilize our powerful executor to run scripts seamlessly within your favorite games. Our platform supports a wide range of scripts, allowing you to customize your gameplay and access features that elevate your gaming experience.
+
+Real-Time Updates: We are committed to keeping our executor up to date with the latest game patches and scripts. Our dedicated team works around the clock to ensure that you have access to the most current features and improvements, keeping you ahead of the competition.
+
+User-Friendly Interface: Our executor boasts an intuitive interface designed for users of all skill levels. Whether you’re a seasoned pro or new to the world of executors, our platform makes it easy to navigate and execute scripts with just a few clicks.
+
+Community Support: Join our vibrant community of gamers who share tips, scripts, and support. Our dedicated support team is always available to help you with any issues or questions you may have, ensuring you have a smooth and enjoyable experience.
+
+Security and Privacy: Your safety is our top priority. We implement advanced security measures to protect your data and ensure a secure gaming environment. Enjoy peace of mind knowing that your information is safe with us.
+
+Custom Script Development: Need a specific script for your gaming needs? Our team offers custom script development services tailored to your requirements. Let us know what you need, and we’ll work with you to create the perfect solution.
+
+At Karumi, we are passionate about delivering top-notch services that enhance your gaming experience. Whether you're looking to explore new possibilities within your games or connect with like-minded players, we are here to support you every step of the way!</p>
+            <img src="https://via.placeholder.com/800x400" alt="Services Image">
+        </div>
+    </div>
+
+    <div id="purchase" class="section">
+        <div class="card">
+            <h2>Purchase</h2>
+            <p>To access our advanced tool, please follow the instructions below:
+
+Join Our Discord Server: Before downloading, you must join our community on Discord. This is where you'll find important updates, support, and a vibrant community of users just like you.
+
+Pricing: Our advanced tool is available for a one-time fee of 200 Robux. This payment grants you full access to all features and is Lifetime. Please note that we currently only accept payments in Robux, so ensure you have sufficient balance before proceeding.
+
+Secure Download: Once you've joined the Discord server and completed your payment, you will receive a buyers role. Make sure to keep an eye on your roles!
+
+Community Support: After downloading, we encourage you to engage with our community for tips, troubleshooting, and to share your experiences. Our team is also available to assist you with any questions or issues that may arise.
+
+Thank you for choosing our advanced tool! We are excited to have you on board and look forward to seeing you in our Discord community!</p>
+            </a>
+        </div>
+    </div>
+
+    <div id="contact" class="section">
+        <div class="card">
+            <h2>Contact Us</h2>
+            <p>We'd love to hear from you! Whether you have questions, feedback, or want to collaborate, our team is here to help. Please feel free to reach out to us by connecting with us on social media.
+
+You can also join our Discord server and chat with us directly. We strive to respond to all messages within 24 hours.
+
+Join our community, and let’s create something amazing together!</p>
+            <p>Join our Discord: <a href="https://discord.gg/XQ4Ze2vsZA" target="_blank" style="color: #d40000;">Discord Link</a></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 <span style="color: #d40000;">Karumi</span>. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            // Show the selected section
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
